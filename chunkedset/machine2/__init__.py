@@ -38,7 +38,7 @@ def leave():
     '''
     path = "http://127.0.0.1:5000/master/leave"
     r = requests.post(url = path, data = data)
-    return "machine joined"
+    return "machine left"
 
 
 @app.route("/update")
