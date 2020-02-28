@@ -6,6 +6,9 @@ Application mimicing actions of machine 3
 from flask import Flask, request
 import requests
 
+data = {
+        'machine':3,
+        'data':[6,7]
 
 app = Flask(__name__)
 

@@ -27,9 +27,7 @@ def join():
     Pending : Send join request to master_machine
     '''
     path = "http://127.0.0.1:5000/master/join"
-    print("\n\n")
     r = requests.post(url = path, data = data)
-    print("Haha\n\n")
     return "machine joined"
 
 
