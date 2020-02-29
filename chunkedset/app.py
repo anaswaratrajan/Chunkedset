@@ -8,18 +8,21 @@ from flask import Flask
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.exceptions import NotFound
 
-from machine1 import app as machine1
-from machine2 import app as machine2
-from machine3 import app as machine3
-from master_machine import app as master
+import sys
+sys.path.insert(0, chunkedset)
+
+from chunk1 import app as chunk1
+from chunk2 import app as chunk2
+from chunk3 import app as chunk3
+from server import app as server
 
 app = Flask(__name__)
 
 app.wsgi_app = DispatcherMiddleware(NotFound(), {
-    "/machine1": machine1,
-    '/machine2': machine2,
-    '/machine3': machine3,
-    '/master':master
+    "/chunk1": chunk1,
+    '/chunk2': chunk2,
+    '/chunk3': chunk3,
+    '/server':server
 })
 
 if __name__ == "__main__":

@@ -1,50 +1,54 @@
 '''
-Application mimicing actions of machine 3
+Application mimicing actions of chunk 2
 
 '''
+
+chunk = {6,7}
 
 from flask import Flask, request
 import requests
 
-data = {
-        'machine':3,
-        'data':[6,7]
+import os,inspect
+chunk1 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+from chunks import Chunk
+
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
     '''
-    Pending : Get data ids from machine3
+    Pending : Get data ids from chunk2
     '''
-    return "machine 3"
+    return "chunk 2"
 
-
-@app.route("/join")
+@app.route("/join", methods = ["GET"])
 def join():
     '''
-    Pending : Send join request to master_machine
+    Pending : Send join request to master_chunk
     '''
     path = "http://127.0.0.1:5000/master/join"
     r = requests.post(url = path, data = data)
-    return "machine joined"
+    return "chunk joined"
+
 
 @app.route("/leave")
 def leave():
     '''
-    Pending : Send leave request to master_machine
+    Pending : Send leave request to master_chunk
     '''
     path = "http://127.0.0.1:5000/master/leave"
     r = requests.post(url = path, data = data)
-    return "machine left"
+    return "chunk left"
+
 
 @app.route("/update")
 def update_data():
     '''
-    Pending
+    Pending : Put method - Update data in chunk2
     '''
     return "data updating"
 
-
 if __name__ == "__main__":
+    chunk2 = Chunk()
     app.run()

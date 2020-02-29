@@ -1,18 +1,21 @@
 '''
-Application mimicing actions of master machine. Master machine is responsible
-for carrying out all operations corresponding to actions from the machine applications
+Application mimicing actions of server. The hashes of each datapoint
+in every chunk is stored in the server.
 
 '''
 
-from flask import Flask
+from flask import Flask, request
 import requests
+
+import os,sys,inspect
+server = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+chunkedset = os.path.dirname(server)
+sys.path.insert(0, chunkedset)
+from chunks import HashTable
+
 
 app = Flask(__name__)
 
-data = {
-'machine':1,
-'data':[1,2,3,4,5]
-}
 
 @app.route("/")
 def index():
@@ -25,10 +28,9 @@ def join_system():
     '''
     Pending : Join the requested machine to system
     '''
-
-    request = request.get_json(force=True)
-    machine = request["machine"]
-
+    new_data = request.get_json(force=True)
+    data = new_data['data']
+    chunk = new_data['chunk']
     return "new machine joining the system"
 
 
@@ -41,4 +43,5 @@ def leave():
 
 
 if __name__ == "__main__":
+    hashtable = HashTable()
     app.run()
