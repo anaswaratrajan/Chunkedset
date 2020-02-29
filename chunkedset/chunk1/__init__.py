@@ -4,7 +4,7 @@ Application mimicing actions of chunk1
 '''
 
 from flask import Flask, request
-from chunks import Chunk
+from chunkedset import Chunk
 
 import os,sys,inspect
 chunk1 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
