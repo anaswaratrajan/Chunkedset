@@ -8,8 +8,7 @@ from flask import Flask
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.exceptions import NotFound
 
-import sys
-sys.path.insert(0, chunkedset)
+
 
 from chunk1 import app as chunk1
 from chunk2 import app as chunk2

@@ -3,35 +3,51 @@ Application mimicing actions of chunk1
 
 '''
 
-from flask import Flask, request
-from chunkedset import Chunk
-
-import os,sys,inspect
-chunk1 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-
+from flask import Flask, request, jsonify
 import requests
+import os,inspect
+
+chunk1 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+chunkedset = os.path.dirname(chunk1)
+from chunkedset import Chunk
+import sys
+sys.path.insert(0, chunkedset)
+
 
 app = Flask(__name__)
+chunk = Chunk()
 
 @app.route("/")
 def index():
     '''
-    Pending : Get data ids from machine1
+    Pending : Get data ids from chunk1
     '''
 
     return "chunk 1"
 
 
-@app.route("/join", methods = ["GET","POST"])
-def join():
+@app.route("/setdata", methods = ["GET","POST"])
+def setdata():
     '''
-    Pending : Send join request to master_machine
-    master_machine returns datavalues to store
+    Assign data to store on chunks
     '''
     dataset = request.get_json(force=True)
     data = dataset['data']
+    foo = chunk.set_data(set(data))
+    if foo:
+        return jsonify(dataset)
+    else:
+        return jsonify({'message':"Data already assigned"})
+
+
+@app.route("/join", methods = ["GET"])
+def join():
+    '''
+    Pending : Send join request to server
+    server returns duplicates to delete
+    '''
     path = "http://127.0.0.1:5000/server/join"
-    r = requests.post(url = path, data = {'data':dataset["data"], 'chunk':1})
+    r = requests.post(url = path, data = {'data':chunk.get_hash(), 'chunk':1})
     print(r)
     return "chunk joined"
 
@@ -41,8 +57,9 @@ def leave():
     '''
     Pending : Send leave request to master_machine
     '''
-    path = "http://127.0.0.1:5000/master/leave"
-    r = requests.post(url = path, data = data)
+    path = "http://127.0.0.1:5000/server/leave"
+    data = dataset['data']
+    r = requests.post(url = path, data = {'data':dataset["data"], 'chunk':1})
     return "chunk left"
 
 
@@ -53,6 +70,8 @@ def update_data():
     '''
     return "data updating"
 
+
+
 if __name__ == "__main__":
-    chunk1 = Chunk()
+
     app.run()

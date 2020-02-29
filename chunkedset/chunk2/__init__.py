@@ -3,17 +3,19 @@ Application mimicing actions of chunk 2
 
 '''
 
-chunk = {6,7}
-
 from flask import Flask, request
 import requests
-
 import os,inspect
-chunk1 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-from chunks import Chunk
+
+chunk2 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+chunkedset = os.path.dirname(chunk2)
+from chunkedset import Chunk
+import sys
+sys.path.insert(0, chunkedset)
 
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
@@ -21,6 +23,7 @@ def index():
     Pending : Get data ids from chunk2
     '''
     return "chunk 2"
+
 
 @app.route("/join", methods = ["GET"])
 def join():
@@ -48,6 +51,8 @@ def update_data():
     Pending : Put method - Update data in chunk2
     '''
     return "data updating"
+
+
 
 if __name__ == "__main__":
     chunk2 = Chunk()

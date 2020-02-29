@@ -5,13 +5,17 @@ Application mimicing actions of chunk 3
 
 from flask import Flask, request
 import requests
-import os,sys,inspect
-chunk3 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+import os,inspect
 
-from chunks import Chunk
+chunk3 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+chunkedset = os.path.dirname(chunk3)
+from chunkedset import Chunk
+import sys
+sys.path.insert(0, chunkedset)
 
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
@@ -31,6 +35,7 @@ def join():
     r = requests.post(url = path, data = data)
     return "chunk joined"
 
+
 @app.route("/leave")
 def leave():
     '''
@@ -40,12 +45,14 @@ def leave():
     r = requests.post(url = path, data = data)
     return "chunk left"
 
+
 @app.route("/update")
 def update_data():
     '''
     Pending
     '''
     return "data updating"
+
 
 
 if __name__ == "__main__":
