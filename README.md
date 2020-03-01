@@ -43,9 +43,12 @@ Usage
 ```
   flask run
 ```
-- Set data to chunk - POST
+- Set data to chunk - POST 
 ```
-  http://127.0.0.1:5000/chunk/setdata
+  curl --header "Content-Type: application/json" \
+   --request POST \
+   --data '{"chunk":1,"data":[1,2,3,4,5]}' \
+   http://127.0.0.1:5000/chunk1/setdata
 ```
 - Send join request to server - GET
 ```
