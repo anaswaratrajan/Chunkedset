@@ -49,6 +49,7 @@ def join():
     r['chunk'] = 1
     d = json.dumps(r)
     r = requests.post(url = path, data = d)
+    print(r)
     return "chunk joined"
 
 

@@ -20,7 +20,7 @@ Chunkedset = ChunkedSet()
 
 @app.route("/")
 def index():
-    return "master machine"
+    return "server"
 
 
 @app.route("/join", methods = ["POST"])
@@ -30,11 +30,12 @@ def join_system():
     '''
     new_data = request.get_json(force=True)
     data = new_data['data']
-    print('\n\n')
-    print(data)
     duplicates = Chunkedset.join(set(data))
     r = dict()
     r['duplicates']=duplicates
+    d = json.dumps(r)
+    path = "http://127.0.0.1:5000/chunk{0}/update".format(new_data['chunk'])
+    r = requests.post(url = path, data = d)
     return jsonify(r)
 
 
