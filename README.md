@@ -1,6 +1,21 @@
 # Chunkedset
 
-The ChunkedSet stores its elements in Chunks of size k. It behaves as a set and contains only unique values in all chunks combined. 
+The ChunkedSet stores its elements in Chunks of size k. It behaves as a set and contains only unique values in all chunks combined.
+
+The implementation works efficiently for any number of chunks.
+
+ChunkedSet is implemented with 3 hash_tables. Each of which helps make it behave as a set of sets.
+
+      Data_table -
+          hash_table1 : key   :  datapoint
+                        value :  (chunk, slots)
+      Slot_table -
+          hash_table2 : key   :  slots
+                        value :  [list of chunks]
+      Node_table -
+          hash_table3 : key   :  chunks
+                        value :  datapoints in tuple
+
 
 Table of contents
 -------------
@@ -39,16 +54,16 @@ Usage
 ```
   pip install -r requirements.txt
 ```
-- Run the app 
+- Run the app
 ```
   flask run
 ```
-- Set data to chunk - POST 
+- Set data to chunk - POST
 ```
-  curl --header "Content-Type: application/json" \
-   --request POST \
-   --data '{"chunk":1,"data":[1,2,3,4,5]}' \
-   http://127.0.0.1:5000/chunk1/setdata
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"chunk":1,"data":[1,2,3,4,5]}' \
+  http://127.0.0.1:5000/chunk1/setdata
 ```
 - Send join request to server - GET
 ```
