@@ -31,13 +31,13 @@ Usage
 ```
   git clone https://github.com/anaswaratrajan/Chunkedset.git
 ```
-- Install requirements
-```
-  pip install -r requirements.txt
-```
 - Enter directory chunkedset
 ```
   cd chunked set
+```
+- Install requirements
+```
+  pip install -r requirements.txt
 ```
 - Run the app 
 ```
