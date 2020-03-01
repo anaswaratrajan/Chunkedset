@@ -149,9 +149,6 @@ class ChunkedSet(Chunk):
         for i in self.node_table:
             if i!=None:
                 node_table.append(list(i))
-
-            print("\n")
-            print(i)
         return node_table
 
     def get_slots(self):
