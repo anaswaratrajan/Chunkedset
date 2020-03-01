@@ -3,9 +3,10 @@ Application mimicing actions of chunk1
 
 '''
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import requests
 import os,inspect
+import json
 
 chunk1 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 chunkedset = os.path.dirname(chunk1)
@@ -15,15 +16,11 @@ sys.path.insert(0, chunkedset)
 
 
 app = Flask(__name__)
-chunk = Chunk()
+chunk_1 = Chunk()
 
 @app.route("/")
 def index():
-    '''
-    Pending : Get data ids from chunk1
-    '''
-
-    return "chunk 1"
+    return jsonify({'chunk':1})
 
 
 @app.route("/setdata", methods = ["GET","POST"])
@@ -33,7 +30,7 @@ def setdata():
     '''
     dataset = request.get_json(force=True)
     data = dataset['data']
-    foo = chunk.set_data(set(data))
+    foo = chunk_1.set_data(set(data))
     if foo:
         return jsonify(dataset)
     else:
@@ -47,8 +44,11 @@ def join():
     server returns duplicates to delete
     '''
     path = "http://127.0.0.1:5000/server/join"
-    r = requests.post(url = path, data = {'data':chunk.get_hash(), 'chunk':1})
-    print(r)
+    r=dict()
+    r['data'] = list(chunk_1.get_hash())
+    r['chunk'] = 1
+    d = json.dumps(r)
+    r = requests.post(url = path, data = d)
     return "chunk joined"
 
 
@@ -59,7 +59,7 @@ def leave():
     '''
     path = "http://127.0.0.1:5000/server/leave"
     data = dataset['data']
-    r = requests.post(url = path, data = {'data':dataset["data"], 'chunk':1})
+    r = requests.post(url = path, data = {'data':data})
     return "chunk left"
 
 
