@@ -21,12 +21,12 @@ class Chunk(set):
         '''clears chunk'''
         self.data.clear()
 
-    def get_hash(self):
+    def get_data(self):
         '''get hash values for each datapoints'''
-        hash_ = set()
+        data = set()
         for i in self.data:
-            hash_.add(hash(i))
-        return hash_
+            data.add(i)
+        return data
 
     def add_data(self, data):
         '''Add given set of datapoints'''
@@ -145,7 +145,14 @@ class ChunkedSet(Chunk):
         return self.data_table
 
     def get_node(self):
-        return self.node_table
+        node_table = []
+        for i in self.node_table:
+            if i!=None:
+                node_table.append(list(i))
+
+            print("\n")
+            print(i)
+        return node_table
 
     def get_slots(self):
         return self.slot_table
