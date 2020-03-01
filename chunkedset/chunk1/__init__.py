@@ -1,5 +1,5 @@
 '''
-Application mimicing actions of chunk1
+Chunk1 - Setdata - Join - Leave -
 
 '''
 
@@ -12,7 +12,8 @@ chunk1 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())
 chunkedset = os.path.dirname(chunk1)
 from chunkedset import Chunk
 import sys
-sys.path.insert(0, chunkedset)
+sys.path.insert(0, chunkedset) '''Adding the module in parent class containing the
+chunkset classes into sys.path'''
 
 
 app = Flask(__name__)
@@ -60,6 +61,7 @@ def leave():
     '''
     path = "http://127.0.0.1:5000/server/leave"
     data = dataset['data']
+    chunk_1.reset()
     r = requests.post(url = path, data = {'data':data})
     return "chunk left"
 

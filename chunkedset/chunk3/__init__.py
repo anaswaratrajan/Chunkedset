@@ -12,7 +12,8 @@ chunk3 = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())
 chunkedset = os.path.dirname(chunk3)
 from chunkedset import Chunk
 import sys
-sys.path.insert(0, chunkedset)
+sys.path.insert(0, chunkedset)'''Adding the module in parent class containing the
+chunkset classes into sys.path'''
 
 
 app = Flask(__name__)
@@ -60,6 +61,7 @@ def leave():
     '''
     path = "http://127.0.0.1:5000/server/leave"
     data = dataset['data']
+    chunk_3.reset()
     r = requests.post(url = path, data = {'data':data})
     return "chunk left"
 
@@ -72,7 +74,10 @@ def update_data():
     dataset = request.get_json(force=True)
     duplicates = dataset['duplicates']
     chunk_3.remove_data(duplicates)
-    return "data updating"
+    r = dict()
+    r['updated_data'] = list(chunk_1.get_data())
+    r['chunk'] = 3
+    return jsonify(r)
 
 
 
