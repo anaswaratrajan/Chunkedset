@@ -2,6 +2,17 @@
 
 The ChunkedSet stores its elements in Chunks of size k. It behaves as a set and contains only unique values in all chunks combined.
 
+
+Table of contents
+-------------
+* [Description](#description)
+* [Features](#features)
+* [Requirements](#req)
+* [Usage](#usage)
+
+<a name="description"></a>
+Description
+-------------
 The implementation works efficiently for any number of chunks.
 
 ChunkedSet is implemented with 3 hash_tables. Each of which helps make it behave as a set of sets.
@@ -16,17 +27,6 @@ ChunkedSet is implemented with 3 hash_tables. Each of which helps make it behave
           hash_table3 : key   :  chunks
                         value :  datapoints in tuple
 
-
-Table of contents
--------------
-* [Description](#description)
-* [Features](#features)
-* [Requirements](#req)
-* [Usage](#usage)
-
-<a name="description"></a>
-Description
--------------
 
 <a name="features"></a>
 Features
