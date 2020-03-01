@@ -12,7 +12,8 @@ server = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())
 chunkedset = os.path.dirname(server)
 from chunkedset import ChunkedSet
 import sys
-sys.path.insert(0, chunkedset)
+sys.path.insert(0, chunkedset)'''Adding the module in parent class containing the
+chunkset classes into sys.path'''
 
 
 app = Flask(__name__)
@@ -20,9 +21,10 @@ Chunkedset = ChunkedSet()
 
 @app.route("/")
 def index():
+    '''Shows the chunkedlist'''
     chunked_set = dict()
-    node_table = Chunkedset.get_node()
-    chunked_set['cset']=node_table
+    cset = Chunkedset.get_node()
+    chunked_set['cset']=cset
     js_dump = json.dumps(chunked_set)
     return js_dump
 
@@ -43,7 +45,7 @@ def join_system():
     r = requests.post(url = path, data = d)
     json_data = json.loads(r.text)
     return jsonify(json_data)
-    
+
 
 @app.route("/leave", methods = ["POST"])
 def leave():
