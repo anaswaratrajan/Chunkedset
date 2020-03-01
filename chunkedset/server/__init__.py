@@ -20,7 +20,7 @@ Chunkedset = ChunkedSet()
 
 @app.route("/")
 def index():
-    return "master machine"
+    return "server"
 
 
 @app.route("/join", methods = ["POST"])
