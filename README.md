@@ -15,7 +15,7 @@ ChunkedSet is implemented with 3 hash_tables. Each of which helps make it behave
       Node_table -
           hash_table3 : key   :  chunks
                         value :  datapoints in tuple
-                    
+
 
 Table of contents
 -------------
@@ -46,13 +46,13 @@ Usage
 ```
   git clone https://github.com/anaswaratrajan/Chunkedset.git
 ```
-- Install requirements
-```
-  pip install -r requirements.txt
-```
 - Enter directory chunkedset
 ```
   cd chunked set
+```
+- Install requirements
+```
+  pip install -r requirements.txt
 ```
 - Run the app
 ```
@@ -60,7 +60,10 @@ Usage
 ```
 - Set data to chunk - POST
 ```
-  http://127.0.0.1:5000/chunk/setdata
+curl --header "Content-Type: application/json" \
+  --request POST \
+  --data '{"chunk":1,"data":[1,2,3,4,5]}' \
+  http://127.0.0.1:5000/chunk1/setdata
 ```
 - Send join request to server - GET
 ```
@@ -71,9 +74,3 @@ Usage
   http://127.0.0.1:5000/chunk1/leave
 ```
  Similar for other chunks ( chunk2, chunk3)
-
-
- curl --header "Content-Type: application/json" \
-   --request POST \
-   --data '{"chunk":1,"data":[1,2,3,4,5]}' \
-   http://127.0.0.1:5000/chunk1/setdata
