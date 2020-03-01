@@ -50,7 +50,7 @@ def join():
     path = "http://127.0.0.1:5000/server/join"
     r = {}
     r['data'] = list(chunk_3.get_hash())
-    r['chunk'] = 1
+    r['chunk'] = 3
     d = json.dumps(r)
     r = requests.post(url = path, data = d)
     print(r.text)
