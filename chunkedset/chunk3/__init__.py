@@ -21,11 +21,7 @@ chunk_3 = Chunk()
 
 @app.route("/")
 def index():
-    '''
-    Pending : Get data ids from chunk3
-    '''
-
-    return "chunk 3"
+    return jsonify({'chunk':3})
 
 
 @app.route("/setdata", methods = ["GET","POST"])
@@ -44,33 +40,38 @@ def setdata():
 @app.route("/join", methods = ["GET"])
 def join():
     '''
-    Pending : Send join request to server
+    Send join request to server
     server returns duplicates to delete
     '''
     path = "http://127.0.0.1:5000/server/join"
-    r = {}
-    r['data'] = list(chunk_3.get_hash())
+    r=dict()
+    r['data'] = list(chunk_3.get_data())
     r['chunk'] = 3
     d = json.dumps(r)
     r = requests.post(url = path, data = d)
-    print(r.text)
-    return "chunk joined"
+    json_data = json.loads(r.text)
+    return jsonify(json_data)
+
 
 @app.route("/leave")
 def leave():
     '''
-    Pending : Send leave request to master_chunk
+    Send leave request to master_chunk
     '''
-    path = "http://127.0.0.1:5000/master/leave"
-    r = requests.post(url = path, data = data)
+    path = "http://127.0.0.1:5000/server/leave"
+    data = dataset['data']
+    r = requests.post(url = path, data = {'data':data})
     return "chunk left"
 
 
-@app.route("/update")
+@app.route("/update", methods=["POST"])
 def update_data():
     '''
-    Pending
+    Update data in chunk3
     '''
+    dataset = request.get_json(force=True)
+    duplicates = dataset['duplicates']
+    chunk_3.remove_data(duplicates)
     return "data updating"
 
 

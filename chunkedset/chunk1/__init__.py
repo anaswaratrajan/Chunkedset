@@ -40,23 +40,23 @@ def setdata():
 @app.route("/join", methods = ["GET"])
 def join():
     '''
-    Pending : Send join request to server
+    Send join request to server
     server returns duplicates to delete
     '''
     path = "http://127.0.0.1:5000/server/join"
     r=dict()
-    r['data'] = list(chunk_1.get_hash())
+    r['data'] = list(chunk_1.get_data())
     r['chunk'] = 1
     d = json.dumps(r)
     r = requests.post(url = path, data = d)
-    print(r)
-    return "chunk joined"
+    json_data = json.loads(r.text)
+    return jsonify(json_data)
 
 
 @app.route("/leave")
 def leave():
     '''
-    Pending : Send leave request to master_machine
+    Send leave request to master_machine
     '''
     path = "http://127.0.0.1:5000/server/leave"
     data = dataset['data']
@@ -64,15 +64,20 @@ def leave():
     return "chunk left"
 
 
-@app.route("/update")
+@app.route("/update", methods=["POST"])
 def update_data():
     '''
-    Pending : Put method - Update data in machine1
+    Update data in chunk1
     '''
-    return "data updating"
+    dataset = request.get_json(force=True)
+    duplicates = dataset['duplicates']
+    chunk_1.remove_data(duplicates)
+    r = dict()
+    r['updated_data'] = list(chunk_1.get_data())
+    r['chunk'] = 1
+    return jsonify(r)
 
 
 
 if __name__ == "__main__":
-
     app.run()

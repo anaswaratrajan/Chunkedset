@@ -20,24 +20,30 @@ Chunkedset = ChunkedSet()
 
 @app.route("/")
 def index():
-    return "server"
+    chunked_set = dict()
+    node_table = Chunkedset.get_node()
+    chunked_set['cset']=node_table
+    js_dump = json.dumps(chunked_set)
+    return js_dump
 
 
 @app.route("/join", methods = ["POST"])
 def join_system():
     '''
-    Pending : Join the requested machine to system
+    Join the requested chunk to chunkedset
     '''
     new_data = request.get_json(force=True)
     data = new_data['data']
     duplicates = Chunkedset.join(set(data))
     r = dict()
-    r['duplicates']=duplicates
+    r['duplicates']=list(duplicates)
+    r['chunk']=new_data['chunk']
     d = json.dumps(r)
     path = "http://127.0.0.1:5000/chunk{0}/update".format(new_data['chunk'])
     r = requests.post(url = path, data = d)
-    return jsonify(r)
-
+    json_data = json.loads(r.text)
+    return jsonify(json_data)
+    
 
 @app.route("/leave", methods = ["POST"])
 def leave():
@@ -47,10 +53,8 @@ def leave():
     new_data = request.get_json(force=True)
     data = new_data['data']
     message = Chunkedset.leave(set(data))
-    return "machine leaving the system"
-
+    return jsonify({'message':'Success'})
 
 
 if __name__ == "__main__":
-    hashtable = HashTable()
     app.run()
